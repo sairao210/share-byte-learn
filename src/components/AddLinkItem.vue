@@ -20,7 +20,7 @@
   </div> 
   <div class="form-group row">
     <div class="offset-4 col-8">
-      <button name="submit" type="submit" class="btn btn-primary" @click="addItem()">Submit</button>
+      <button name="submit" type="submit" class="btn btn-primary" @click.prevent="addItem()">Submit</button>
     </div>
   </div>
 </form>
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import { pushLink } from "../database/DataRepository";
 export default {
     name: "add-link-item",
     data() {
@@ -40,7 +41,9 @@ export default {
     },
     methods: {
         addItem() {
-            console.log(`${this.data.description} ${this.data.source}`);
+            pushLink(this.data.source, this.data.description);
+            this.data.description = undefined;
+            this.data.source = ''
         }
     },
 }
